@@ -66,7 +66,13 @@ function App() {
           .set(tiles, { backgroundColor: () => gsap.utils.random(palette) })
           .to(tiles, { scale: 1, duration: 0.3, ease: 'power2.in', stagger: tileStagger })
           .set(panel, { autoAlpha: 1 })
-          .to(tiles, { scale: 0, duration: 0.3, ease: 'power2.out', stagger: tileStagger })
+
+        if (panel.querySelector('.bio')) {
+          // Looked up at call time because Bio's useEffect creates the timeline after this layout effect runs
+          wipes.call(() => gsap.getById('text-scramble')?.restart())
+        }
+
+        wipes.to(tiles, { scale: 0, duration: 0.3, ease: 'power2.out', stagger: tileStagger })
       })
     }, panelsRef)
 

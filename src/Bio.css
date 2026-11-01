@@ -5,3 +5,21 @@ p {
     font-weight: 700;
     line-height: 1;
 }
+#scrambled-text-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#scrambled-text-original {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.text-scrambled span {
+word-break: break-word;
+}
