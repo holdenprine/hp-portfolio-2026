@@ -30,7 +30,7 @@ function Bio() {
       })
       .to("#scramble-text-2",{
         scrambleText: {
-          text: "Track record of shipping production work across music, health/wellness, and fitness industries — including Stripe/Analytics integrations, WordPress security remediation, and performance optimization.",
+          text: "Track record of shipping production work across music, health/wellness, and fitness industries including Full-Lifecycle Development, Stripe/Analytics integrations, and performance optimization.",
           chars: "~",
           speed: 0.1
         },

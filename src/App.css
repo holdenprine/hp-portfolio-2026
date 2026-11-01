@@ -1,3 +1,4 @@
+/* Renamed --muted, --font-mono, --text-xs and --text-sm to avoid clashing with Tailwind/shadcn variables of the same name */
 :root {
   --ink: #0b0b0b;
   --ink-soft: #161616;
@@ -10,7 +11,7 @@
   /* semantic */
   --bg: var(--eggshell);
   --fg: var(--ink);
-  --muted: var(--concrete-dark);
+  --fg-muted: var(--concrete-dark);
   --line: var(--concrete-light);
 
   /* transition tiles */
@@ -22,16 +23,16 @@
 
   --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-code: "JetBrains Mono", ui-monospace, monospace;
 
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
+  --size-xs: 0.75rem;
+  --size-sm: 0.875rem;
 }
 
 [data-theme="dark"] {
   --bg: var(--ink);
   --fg: var(--eggshell);
-  --muted: var(--concrete);
+  --fg-muted: var(--concrete);
   --line: #2a2a2a;
 }
 
