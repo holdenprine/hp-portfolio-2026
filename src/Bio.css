@@ -23,3 +23,13 @@ p {
 .text-scrambled span {
 word-break: break-word;
 }
+
+#scramble-cursor {
+    animation: cursor-blink 1s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+    50% {
+        opacity: 0;
+    }
+}
