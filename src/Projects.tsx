@@ -6,35 +6,34 @@ import { Slider } from "@/components/ui/slider"
 
 const PROJECTS = [
   {
-    title: 'Project 1',
-    description: 'Description 1',
+    title: 'HaloboyOfficial',
+    description: 'Contracted Webapp built for Musician/Producer, Haloboy',
+    image: 'https://via.placeholder.com/150',
+    link: 'https://haloboyofficial.com/',
+  },
+  {
+    title: 'Victorise MTB Site',
+    description: 'Built out end-to-end test and reworked MTB simulators algorithm',
     image: 'https://via.placeholder.com/150',
     link: 'https://www.google.com',
   },
   {
-    title: 'Project 2',
-    description: 'Description 2',
+    title: 'LeafyBuddy Repo',
+    description: 'Study Companion releasing soon - follow the dev journey via the repo!',
     image: 'https://via.placeholder.com/150',
-    link: 'https://www.google.com',
+    link: 'https://github.com/holdenprine/Leafy-Buddy-Work-Timer',
   },
   {
-    title: 'Project 3',
-    description: 'Description 3',
+    title: 'Mud Muzik',
+    description: 'Coding Bootcamp project - built out a mood based music player with a custom API',
     image: 'https://via.placeholder.com/150',
-    link: 'https://www.google.com',
-  },
-  {
-    title: 'Project 4',
-    description: 'Description 4',
-    image: 'https://via.placeholder.com/150',
-    link: 'https://www.google.com',
+    link: 'https://github.com/capstone-capos-2022-echo/mood-music',
   },
 ]
 
 function Projects() {
   const [api, setApi] = useState<CarouselApi>()
   const [index, setIndex] = useState(0)
-  // Snap positions, not cards: with 3 cards per view, 4 cards only have 2 positions
   const [snapCount, setSnapCount] = useState(0)
 
   useEffect(() => {
@@ -56,12 +55,34 @@ function Projects() {
     }
   }, [api])
 
+  useEffect(() => {
+    if (!api) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      // The focused carousel or slider already handled this key itself
+      if (e.defaultPrevented) return
+      const target = e.target as HTMLElement
+      if (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) return
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        api.scrollPrev()
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        api.scrollNext()
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [api])
+
   return (
     <section className="projects w-full">
       <Carousel setApi={setApi} opts={{ align: 'start' }} className="w-full">
         <CarouselContent>
           {PROJECTS.map((p) => (
-            <CarouselItem key={p.title} className="md:basis-1/2 lg:basis-1/3">
+            <CarouselItem key={p.title}>
               <Card className="h-full">
                 <img src={p.image} alt="" className="aspect-video w-full object-cover" />
                 <CardHeader>
