@@ -3,30 +3,32 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel"
 import { Slider } from "@/components/ui/slider"
+import { MdOutlineHeadphones } from "react-icons/md";
+
 
 const PROJECTS = [
   {
     title: 'HaloboyOfficial',
     description: 'Contracted Webapp built for Musician/Producer, Haloboy',
-    image: 'https://via.placeholder.com/150',
+    icon: <MdOutlineHeadphones />,
     link: 'https://haloboyofficial.com/',
   },
   {
     title: 'Victorise MTB Site',
     description: 'Built out end-to-end test and reworked MTB simulators algorithm',
-    image: 'https://via.placeholder.com/150',
+    icon: 'https://via.placeholder.com/150',
     link: 'https://www.google.com',
   },
   {
     title: 'LeafyBuddy Repo',
     description: 'Study Companion releasing soon - follow the dev journey via the repo!',
-    image: 'https://via.placeholder.com/150',
+    icon: 'https://via.placeholder.com/150',
     link: 'https://github.com/holdenprine/Leafy-Buddy-Work-Timer',
   },
   {
     title: 'Mud Muzik',
     description: 'Coding Bootcamp project - built out a mood based music player with a custom API',
-    image: 'https://via.placeholder.com/150',
+    icon: 'https://via.placeholder.com/150',
     link: 'https://github.com/capstone-capos-2022-echo/mood-music',
   },
 ]
@@ -83,8 +85,10 @@ function Projects() {
         <CarouselContent>
           {PROJECTS.map((p) => (
             <CarouselItem key={p.title}>
-              <Card className="h-full">
-                <img src={p.image} alt="" className="aspect-video w-full object-cover" />
+              <Card className="h-full pt-0">
+                <div className="flex aspect-video w-full items-center justify-center bg-muted text-6xl">
+                  {p.icon}
+                </div>
                 <CardHeader>
                   <CardTitle>{p.title}</CardTitle>
                   <CardDescription className="line-clamp-3">{p.description}</CardDescription>
