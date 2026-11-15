@@ -4,6 +4,10 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/comp
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel"
 import { Slider } from "@/components/ui/slider"
 import { MdOutlineHeadphones } from "react-icons/md";
+import { MdDirectionsBike } from "react-icons/md";
+import { RiPlantFill } from "react-icons/ri";
+import { IoIosMusicalNotes } from "react-icons/io";
+import "./Projects.css";
 
 
 const PROJECTS = [
@@ -16,19 +20,19 @@ const PROJECTS = [
   {
     title: 'Victorise MTB Site',
     description: 'Built out end-to-end test and reworked MTB simulators algorithm',
-    icon: 'https://via.placeholder.com/150',
+    icon: <MdDirectionsBike />,
     link: 'https://www.google.com',
   },
   {
     title: 'LeafyBuddy Repo',
     description: 'Study Companion releasing soon - follow the dev journey via the repo!',
-    icon: 'https://via.placeholder.com/150',
+    icon: <RiPlantFill />,
     link: 'https://github.com/holdenprine/Leafy-Buddy-Work-Timer',
   },
   {
     title: 'Mud Muzik',
     description: 'Coding Bootcamp project - built out a mood based music player with a custom API',
-    icon: 'https://via.placeholder.com/150',
+    icon: <IoIosMusicalNotes />,
     link: 'https://github.com/capstone-capos-2022-echo/mood-music',
   },
 ]
@@ -80,13 +84,13 @@ function Projects() {
   }, [api])
 
   return (
-    <section className="projects w-full">
+    <section className="projects w-full max-w-3xl mx-auto">
       <Carousel setApi={setApi} opts={{ align: 'start' }} className="w-full">
         <CarouselContent>
           {PROJECTS.map((p) => (
             <CarouselItem key={p.title}>
               <Card className="h-full pt-0">
-                <div className="flex aspect-video w-full items-center justify-center bg-muted text-6xl">
+                <div className="flex aspect-video w-full items-center justify-center bg-muted text-9xl">
                   {p.icon}
                 </div>
                 <CardHeader>
@@ -95,7 +99,7 @@ function Projects() {
                 </CardHeader>
                 <CardFooter className="mt-auto gap-2">
                   <Button asChild>
-                    <a href={p.link} target="_blank" rel="noreferrer">See More</a>
+                    <a href={p.link} target="_blank" rel="noreferrer" className="mx-auto">See More</a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -114,7 +118,8 @@ function Projects() {
           onValueChange={([v]) => api?.scrollTo(v)}
         />
       )}
-    </section>
+      <h6>use the arrow keys to move through projects</h6>
+    </section>  
   )
 }
 
