@@ -1,9 +1,10 @@
-p {
+.bio p {
     text-align: left;
     font-family: var(--font-display);
     font-size: 50px;
     font-weight: 700;
     line-height: 1;
+    color: var(--text);
 }
 #scrambled-text-content {
     position: relative;
