@@ -126,6 +126,15 @@ body {
   margin: 0;
 }
 
+/* Hidden rather than overflow: hidden, since ScrollSmoother and ScrollTrigger are driven by native page scroll */
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 h1,
 h2 {
   font-family: var(--heading);

@@ -22,6 +22,54 @@
     padding-right: 0.5em;
 }
 
+/* Absolute so it doesn't add height to .title and shift the vertically centered marquee rows */
+.title-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2rem;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-code);
+    font-size: var(--size-sm);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    animation: title-hint-swipe 4.5s ease-out 0.8s both;
+}
+
+/* Starts past the 2rem bottom offset so .panels' overflow: hidden keeps it fully out of view */
+@keyframes title-hint-swipe {
+    0% {
+        transform: translateY(calc(100% + 2rem));
+        opacity: 0;
+    }
+    12% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    90% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-0.5rem);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .title-hint {
+        animation-name: title-hint-fade;
+    }
+
+    @keyframes title-hint-fade {
+        0%, 100% { opacity: 0; }
+        15%, 80% { opacity: 1; }
+    }
+}
+
 .visually-hidden {
     position: absolute;
     width: 1px;
