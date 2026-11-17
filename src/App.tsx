@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
@@ -20,9 +20,11 @@ const TILE_COLORS = [
   '--tile-orange',
 ]
 
+
+
 function App() {
   const panelsRef = useRef<HTMLDivElement>(null)
-
+  const [contactActive, setContactActive] = useState(false)
   // Layout effect so the smoother exists before children create their ScrollTriggers in useEffect
   useLayoutEffect(() => {
     const smoother = ScrollSmoother.create({
@@ -57,6 +59,10 @@ function App() {
           pin: true,
           scrub: true,
           invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const tl = self.animation as gsap.core.Timeline
+            setContactActive(tl.time() >= tl.labels.contactIn)
+          },
         },
       })
 
@@ -73,7 +79,12 @@ function App() {
         }
 
         wipes.to(tiles, { scale: 0, duration: 0.3, ease: 'power2.out', stagger: tileStagger })
+        
+        if(panel.querySelector('.contact')) {
+          wipes.addLabel('contactIn')
+        }
       })
+
     }, panelsRef)
 
     return () => {
@@ -89,7 +100,7 @@ function App() {
           <div className="panel"><Title /></div>
           <div className="panel"><Bio /></div>
           <div className="panel"><Projects /></div>
-          <div className="panel"><Contact /></div>
+          <div className="panel"><Contact active={contactActive} /></div>
           <div
             className="tiles"
             aria-hidden="true"
