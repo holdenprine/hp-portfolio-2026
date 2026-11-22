@@ -12,13 +12,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 const TILE_COLS = 12
 const TILE_ROWS = 8
-const TILE_COLORS = [
-  '--tile-violet',
-  '--tile-purple',
-  '--tile-black',
-  '--tile-yellow',
-  '--tile-orange',
-]
+const TILE_COLORS = ['--tile-1', '--tile-2', '--tile-3', '--tile-4', '--tile-5']
 
 
 
@@ -78,11 +72,11 @@ function App() {
           wipes.call(() => gsap.getById('text-scramble')?.restart())
         }
 
-        wipes.to(tiles, { scale: 0, duration: 0.3, ease: 'power2.out', stagger: tileStagger })
-        
-        if(panel.querySelector('.contact')) {
+        if (panel.querySelector('.contact')) {
           wipes.addLabel('contactIn')
         }
+
+        wipes.to(tiles, { scale: 0, duration: 0.3, ease: 'power2.out', stagger: tileStagger })
       })
 
     }, panelsRef)

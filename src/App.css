@@ -14,19 +14,45 @@
   --fg-muted: var(--concrete-dark);
   --line: var(--concrete-light);
 
-  /* transition tiles */
-  --tile-violet: #44355b;
-  --tile-purple: #31263e;
-  --tile-black: #221e22;
-  --tile-yellow: #eca72c;
-  --tile-orange: #ee5622;
-
   --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-code: "JetBrains Mono", ui-monospace, monospace;
 
   --size-xs: 0.75rem;
   --size-sm: 0.875rem;
+}
+
+/* Seasonal Colors for tiles*/
+[data-season="fall"] {
+  --tile-1: #44355b; /* violet */
+  --tile-2: #31263e; /* purple */
+  --tile-3: #221e22; /* black */
+  --tile-4: #eca72c; /* yellow */
+  --tile-5: #ee5622; /* orange */
+}
+
+[data-season="winter"] {
+  --tile-1: #df2935; /* red */
+  --tile-2: #1f4d36; /* evergreen */
+  --tile-3: #fffafa; /* snow */
+  --tile-4: #dfa06e; /* sandy brown */
+  --tile-5: #412722; /* dark brown */
+}
+
+[data-season="spring"] {
+  --tile-1: #61a0af; /* pacific blue */
+  --tile-2: #96c9dc; /* sky blue */
+  --tile-3: #f06c9b; /* rose kiss */
+  --tile-4: #f9b9b7; /* powder blush */
+  --tile-5: #f5d491; /* soft peach */
+}
+
+[data-season="summer"] {
+  --tile-1: #586ba4; /* smart blue */
+  --tile-2: #324376; /* french blue */
+  --tile-3: #f5dd90; /* light gold */
+  --tile-4: #f68e5f; /* tangerine dream */
+  --tile-5: #f76c5e; /* vibrant coral */
 }
 
 [data-theme="dark"] {

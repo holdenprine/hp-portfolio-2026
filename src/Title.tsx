@@ -54,6 +54,7 @@ function Title() {
             </h1>
             <MarqueeRow text={NAME} duration={50} />
             <MarqueeRow text={ROLE} duration={60} />
+            <h6 className="title-hint">Scroll to Continue</h6>
         </section>
     )
 }
