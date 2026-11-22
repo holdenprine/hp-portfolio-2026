@@ -26,7 +26,7 @@ const OPTIONS: ContactOption[] = [
 ]
 
 const STEP_DELAY = [
-  200,
+  50,
   Math.min(2200, 600 + PROMPT_FOR_USER.length * 18),
   700,
   550,
