@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import './App.css'
 import Title from './Title'
 import Bio from './Bio'
@@ -19,6 +20,14 @@ const TILE_COLORS = ['--tile-1', '--tile-2', '--tile-3', '--tile-4', '--tile-5']
 function App() {
   const panelsRef = useRef<HTMLDivElement>(null)
   const [contactActive, setContactActive] = useState(false)
+  const [canPrev, setCanPrev] = useState(false)
+  const [canNext, setCanNext] = useState(true)
+  const smootherRef = useRef<ScrollSmoother | null>(null)
+  const wipesTriggerRef = useRef<ScrollTrigger | null>(null)
+  const panelStepsRef = useRef(0)
+  const navTweenRef = useRef<gsap.core.Tween | null>(null)
+  const navTargetRef = useRef(0)
+
   // Layout effect so the smoother exists before children create their ScrollTriggers in useEffect
   useLayoutEffect(() => {
     const smoother = ScrollSmoother.create({
@@ -26,6 +35,7 @@ function App() {
       content: '#smooth-content',
       smooth: 1,
     })
+    smootherRef.current = smoother
 
     const ctx = gsap.context(() => {
       const panels = gsap.utils.toArray<HTMLElement>('.panel')
@@ -56,9 +66,13 @@ function App() {
           onUpdate: (self) => {
             const tl = self.animation as gsap.core.Timeline
             setContactActive(tl.time() >= tl.labels.contactIn)
+            setCanPrev(self.progress > 0.01)
+            setCanNext(self.progress < 0.99)
           },
         },
       })
+      wipesTriggerRef.current = wipes.scrollTrigger ?? null
+      panelStepsRef.current = incoming.length
 
       // Each wipe reshuffles tile colors, covers the screen left to right, swaps in the next panel, then clears left to right
       incoming.forEach((panel) => {
@@ -82,34 +96,80 @@ function App() {
     }, panelsRef)
 
     return () => {
+      navTweenRef.current?.kill()
       ctx.revert()
       smoother.kill()
     }
   }, [])
 
+  // Tweens the scroll position rather than jumping so the scrubbed tile wipe still plays
+  const goToPanel = (direction: 1 | -1) => {
+    const smoother = smootherRef.current
+    const st = wipesTriggerRef.current
+    const steps = panelStepsRef.current
+    if (!smoother || !st || !steps) return
+
+    // Rapid taps chain off the pending target instead of wherever the scroll currently is
+    const current = navTweenRef.current?.isActive()
+      ? navTargetRef.current
+      : Math.round(st.progress * steps)
+    const target = gsap.utils.clamp(0, steps, current + direction)
+    navTargetRef.current = target
+
+    navTweenRef.current = gsap.to(smoother, {
+      scrollTop: st.start + ((st.end - st.start) * target) / steps,
+      duration: 1.2,
+      ease: 'power1.inOut',
+      overwrite: true,
+    })
+  }
+
   return (
-    <div id="smooth-wrapper">
-      <div id="smooth-content">
-        <div className="panels" ref={panelsRef}>
-          <div className="panel"><Title /></div>
-          <div className="panel"><Bio /></div>
-          <div className="panel"><Projects /></div>
-          <div className="panel"><Contact active={contactActive} /></div>
-          <div
-            className="tiles"
-            aria-hidden="true"
-            style={{
-              gridTemplateColumns: `repeat(${TILE_COLS}, 1fr)`,
-              gridTemplateRows: `repeat(${TILE_ROWS}, 1fr)`,
-            }}
-          >
-            {Array.from({ length: TILE_COLS * TILE_ROWS }, (_, i) => (
-              <div className="tile" key={i} />
-            ))}
+    <>
+      {/* Outside #smooth-wrapper because ScrollSmoother transforms its content, which breaks position: fixed */}
+      <nav className="panel-nav" aria-label="Sections">
+        <button
+          type="button"
+          className="panel-nav-zone panel-nav-next"
+          aria-label="Next section"
+          disabled={!canNext}
+          onClick={() => goToPanel(1)}
+        >
+          <ChevronLeftIcon />
+        </button>
+        <button
+          type="button"
+          className="panel-nav-zone panel-nav-prev"
+          aria-label="Previous section"
+          disabled={!canPrev}
+          onClick={() => goToPanel(-1)}
+        >
+          <ChevronRightIcon />
+        </button>
+      </nav>
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <div className="panels" ref={panelsRef}>
+            <div className="panel"><Title /></div>
+            <div className="panel"><Bio /></div>
+            <div className="panel"><Projects /></div>
+            <div className="panel"><Contact active={contactActive} /></div>
+            <div
+              className="tiles"
+              aria-hidden="true"
+              style={{
+                gridTemplateColumns: `repeat(${TILE_COLS}, 1fr)`,
+                gridTemplateRows: `repeat(${TILE_ROWS}, 1fr)`,
+              }}
+            >
+              {Array.from({ length: TILE_COLS * TILE_ROWS }, (_, i) => (
+                <div className="tile" key={i} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

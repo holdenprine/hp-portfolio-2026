@@ -34,3 +34,16 @@ word-break: break-word;
         opacity: 0;
     }
 }
+
+/* Full bio has to fit inside one pinned 100svh panel, so size scales with viewport width */
+@media (max-width: 640px) {
+    .bio p {
+        font-size: clamp(1.25rem, 6.2vw, 1.75rem);
+        line-height: 1.1;
+    }
+
+    .text-scrambled span {
+        word-break: normal;
+        overflow-wrap: break-word;
+    }
+}
