@@ -118,7 +118,10 @@ function Projects() {
           onValueChange={([v]) => api?.scrollTo(v)}
         />
       )}
-      <h6>use the arrow keys to move through projects</h6>
+      <h6>
+        <span className="max-sm:hidden">use the arrow keys to move through projects</span>
+        <span className="hidden max-sm:inline">scroll the slider to move through projects</span>
+      </h6>
     </section>  
   )
 }
